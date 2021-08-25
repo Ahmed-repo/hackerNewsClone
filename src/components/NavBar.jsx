@@ -23,7 +23,17 @@ const NavBar = ({ setQuery, loading }) => {
   return (
     <div>
       <Navbar light expand="md" className="navbar">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarBrand href="/">HackerNewsClone</NavbarBrand>
+        <Form className="d-flex">
+          <input
+            onChange={(e) => setQuery(e.target.value)}
+            type="text"
+            placeholder="Search"
+            className="mr-2"
+            aria-label="Search"
+          />
+          <Button variant="outline-success">Search</Button>
+        </Form>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -47,16 +57,6 @@ const NavBar = ({ setQuery, loading }) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <Form className="d-flex">
-            <input
-              onChange={(e) => setQuery(e.target.value)}
-              type="text"
-              placeholder="Search"
-              className="mr-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
         </Collapse>
       </Navbar>
     </div>
