@@ -5,18 +5,17 @@ const List = ({ user, loading }) => {
   return loading ? (
     <h1 className="loading">loading..</h1>
   ) : (
-    <ListGroup className="list_group">
-      {user.map((user) => {
-        return (
-          <>
-            <ListGroupItem tag="a" href="#" className="list-group-item">
-              {" "}
-              {user.titl}
-            </ListGroupItem>
-          </>
-        );
-      })}
-    </ListGroup>
+    <nav>
+      <ul className="pagination" id="list-ul">
+        {user.map((user) => (
+          <li className="page-item" id="list-li">
+            <a href="!#" className="page-link" id="list-li">
+              {user.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

@@ -7,7 +7,6 @@ import axios from "axios";
 import Pagination from "./components/Pagination";
 import { OrbitControls } from "@react-three/drei";
 import { useSpring, a } from "@react-spring/three";
-import { Html } from "@react-three/drei";
 
 const Spin = ({ position, args, color }) => {
   const mesh = useRef(null);
@@ -38,6 +37,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
+  const [changecolor, setChangeColor] = useState(false);
 
   useEffect(() => {
     fetchdata();
@@ -63,12 +63,17 @@ function App() {
   };
 
   return (
-    <>
-      <NavBar setQuery={setQuery} loading={loading} />
+    <div className={changecolor ? "blue" : "black"}>
+      <NavBar
+        setQuery={setQuery}
+        loading={loading}
+        setChangeColor={setChangeColor}
+        changecolor={changecolor}
+      />
       <Canvas
         shadowMap
         colorManagement
-        camera={{ position: [-5, 2, 10], fov: 60 }}
+        camera={{ position: [-1, 2, 10], fov: 60 }}
       >
         <ambientLight intensity={1} />
         <directionalLight
@@ -89,11 +94,14 @@ function App() {
         <group>
           <mesh
             receiveShadow
-            rotation={[-Math.PI / 2.2, 0, 0]}
+            rotation={[-Math.PI / 2, 0, 0]}
             position={[0, -3, 0]}
           >
             <planeBufferGeometry attach="geometry" args={[100, 100]} />
-            <meshPhysicalMaterial attach="material" color="" />
+            <meshPhysicalMaterial
+              attach="material"
+              color={changecolor ? "grey" : "black"}
+            />
           </mesh>
 
           <Spin position={[0, -1, 1]} args={[2, 2, 2]} color="blue" />
@@ -133,7 +141,7 @@ function App() {
           paginate={paginate}
         />
       </div>
-    </>
+    </div>
   );
 }
 

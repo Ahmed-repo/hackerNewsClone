@@ -15,7 +15,7 @@ import {
   Button,
 } from "reactstrap";
 
-const NavBar = ({ setQuery, loading }) => {
+const NavBar = ({ setQuery, setChangeColor, changeColor }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -50,8 +50,21 @@ const NavBar = ({ setQuery, loading }) => {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem></DropdownItem>
-                <DropdownItem className="option1">Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    setChangeColor(setChangeColor(!changeColor));
+                  }}
+                  className="option1"
+                >
+                  Dark mode
+                </DropdownItem>
+                <DropdownItem
+                  onClick={() => {
+                    setChangeColor(!changeColor);
+                  }}
+                >
+                  Light mode
+                </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Reset</DropdownItem>
               </DropdownMenu>
