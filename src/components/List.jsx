@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 
 const List = ({ user, loading }) => {
   return loading ? (
-    <h1>loading..</h1>
+    <h1 className="loading">loading..</h1>
   ) : (
     <ListGroup className="list_group">
       {user.map((user) => {
@@ -11,7 +11,7 @@ const List = ({ user, loading }) => {
           <>
             <ListGroupItem tag="a" href="#" className="list-group-item">
               {" "}
-              {user.title}
+              {user.titl}
             </ListGroupItem>
           </>
         );

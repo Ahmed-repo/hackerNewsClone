@@ -23,7 +23,9 @@ const NavBar = ({ setQuery, loading }) => {
   return (
     <div>
       <Navbar light expand="md" className="navbar">
-        <NavbarBrand href="/">HackerNewsClone</NavbarBrand>
+        <NavbarBrand className="navbarBrand" href="/">
+          HackerNewsClone
+        </NavbarBrand>
         <Form className="d-flex">
           <input
             onChange={(e) => setQuery(e.target.value)}
@@ -38,9 +40,6 @@ const NavBar = ({ setQuery, loading }) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink href="https://github.com/reactstrap/reactstrap">
                 GitHub
               </NavLink>
@@ -50,7 +49,8 @@ const NavBar = ({ setQuery, loading }) => {
                 Options
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
+                <DropdownItem></DropdownItem>
+                <DropdownItem className="option1">Option 1</DropdownItem>
                 <DropdownItem>Option 2</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Reset</DropdownItem>

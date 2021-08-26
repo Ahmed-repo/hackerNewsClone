@@ -8,13 +8,15 @@ body :root {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 body {
-  background: rgb(192, 194, 193) !important;
+  background: #f13412 !important;
 }
 
 canvas {
-  height: 500px;
+  height: 60vh !important;
+  width: 100vh;
 }
 
 nav {
@@ -22,6 +24,7 @@ nav {
 }
 .navbar {
   margin: 5%;
+  margin-top: 1%;
   font-size: 25px;
   color: aliceblue !important;
   font-weight: 600;
@@ -29,12 +32,53 @@ nav {
 }
 .list_group {
   margin: 5%;
-  margin-right: 40%;
+  margin-right: 60%;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-content: space-between !important;
 }
 .list-group-item {
+  pointer-events: none !important;
+  top: 50% !important;
+  position: fixed !important;
+  white-space: pre-line !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  standard-user-select: none !important;
+  pointer-events: none !important;
   font-family: sans-serif;
   border: 5px thin orange !important;
   background: none !important;
   color: rgb(255, 255, 255) !important;
   font-size: 18px;
+  top: 50% !important;
+  bottom: 50% !important;
+}
+.navbarBrand {
+  color: aliceblue !important;
+  font-weight: 700 !important;
+}
+.mr-auto :first-child {
+  color: aliceblue !important;
+  font-size: 22px;
+}
+.option1 {
+  color: black !important;
+}
+.loading {
+  margin: 5% !important;
+  color: aliceblue !important;
+}
+.pagination {
+  position: absolute !important;
+  top: 50% !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
 }
