@@ -68,7 +68,7 @@ nav {
 }
 .pagination {
   position: absolute !important;
-  top: 51% !important;
+  top: 55% !important;
   -webkit-touch-callout: none !important;
   -webkit-user-select: none !important;
   -khtml-user-select: none !important;
@@ -105,6 +105,7 @@ nav {
   font-size: 18px;
   font-family: sans-serif !important;
 }
+
 .blue {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
@@ -125,11 +126,13 @@ nav {
 }
 
 .black {
-  background: url(./components/free-space-wallpaper.jpeg);
+  background: linear-gradient(-45deg, #ffee01, #ff0000, #150746, #23d5ab);
+
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   height: 100vh;
 }
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;

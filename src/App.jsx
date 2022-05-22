@@ -1,12 +1,14 @@
-import React, { useRef, useState, useEffect, Suspense } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./App.scss";
 import NavBar from "./components/NavBar.jsx";
 import List from "./components/List.jsx";
 import { Canvas, useFrame } from "react-three-fiber";
 import axios from "axios";
 import Pagination from "./components/Pagination";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Stars } from "@react-three/drei";
 import { useSpring, a } from "@react-spring/three";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Spin = ({ position, args, color }) => {
   const mesh = useRef(null);
@@ -30,10 +32,20 @@ const Spin = ({ position, args, color }) => {
     </a.mesh>
   );
 };
+// chached
+const QuantumCube = () => {
+  const [model, setModel] = useState();
+  useEffect(() => {
+    new GLTFLoader().load("/scene.gltf", setModel);
+  }, []);
+
+  return model ? <primitive object={model.scene} /> : null;
+};
 
 function App() {
   const [user, setUser] = useState([]);
   const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
@@ -41,16 +53,14 @@ function App() {
 
   useEffect(() => {
     fetchdata();
-  }, [query]);
+  }, [search]);
   const fetchdata = async () => {
     setLoading(true);
     await axios
-      .get(`https://hn.algolia.com/api/v1/search?query=${query}`)
+      .get(`https://hn.algolia.com/api/v1/search?query=${search}`)
       .then((response) => setUser(response.data.hits));
 
     setLoading(false);
-
-    // setLoading(!loading);
   };
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -66,20 +76,27 @@ function App() {
     <div className={changecolor ? "blue" : "black"}>
       <NavBar
         setQuery={setQuery}
+        query={query}
         loading={loading}
         setChangeColor={setChangeColor}
         changecolor={changecolor}
+        setSearch={setSearch}
       />
+
       <Canvas
         shadowMap
         colorManagement
         camera={{ position: [-1, 2, 10], fov: 60 }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        }}
       >
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.5} />
         <directionalLight
           castShadow
           position={(0, 10, 0)}
-          intensity={3}
+          intensity={0.5}
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
           shadow-camera-far={50}
@@ -88,47 +105,19 @@ function App() {
           shadow-camera-top={10}
           shadow-camera-bottom={-10}
         />
-        <spotLight position={[1, 5, 10]} intensity={2} />
-        <pointLight position={[-10, 0, -20]} intensity={2} />
-        <pointLight position={[0, -10, 0]} intensity={1.5} />
-        <group>
-          <mesh
-            receiveShadow
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, -3, 0]}
-          >
-            <planeBufferGeometry attach="geometry" args={[100, 100]} />
-            <meshPhysicalMaterial
-              attach="material"
-              color={changecolor ? "grey" : "black"}
-            />
-          </mesh>
+        <spotLight position={[1, 5, 10]} intensity={0.5} />
+        <pointLight position={[-10, 0, -20]} intensity={1} />
+        <pointLight position={[0, -10, 0]} intensity={0.5} />
 
-          <Spin position={[0, -1, 1]} args={[2, 2, 2]} color="blue" />
-          <Spin position={[-10, -1, -3]} color="green" />
-          <Spin position={[5, 1, -5]} color="355070" />
-          <Spin position={[1, -3, 3]} args={[2, 2, 2]} color="#808000" />
-          <Spin position={[-8, -5, -4]} color="green" />
-          <Spin position={[0, 6, -7]} color="red" />
-          <Spin position={[0, -5, 1]} args={[5, 2, 1]} color="blue" />
-          <Spin position={[-1, -1, -3]} color="green" />
-          <Spin position={[1, 5, -5]} color="red" />
-          <Spin position={[1, -3, 8]} args={[2, 2, 2]} color="#008020" />
-          <Spin position={[-8, -5, -4]} color="green" />
-          <Spin position={[0, 6, -7]} color="red" />
-          <Spin position={[3, -1, 1]} args={[2, 2, 2]} color="#800000" />
-          <Spin position={[-0, -2, -6]} color="green" />
-          <Spin position={[5, 1, -5]} color="red" />
-          <Spin position={[3, -4, 3]} args={[2, 2, 2]} color="blue" />
-          <Spin position={[-5, -5, -4]} color="green" />
-          <Spin position={[7, 6, -7]} color="red" />
-          <Spin position={[5, -5, 1]} args={[2, 2, 2]} color="blue" />
-          <Spin position={[-3, 5, -3]} color="green" />
-          <Spin position={[4, 5, -5]} color="red" />
-          <Spin position={[4, 5, -3]} args={[2, 2, 2]} color="#800000" />
-          <Spin position={[-8, 5, -4]} color="green" />
-          <Spin position={[0, 6, 7]} color="red" />
-        </group>
+        <Stars
+          radius={100} // Radius of the inner sphere (default=100)
+          depth={50} // Depth of area where stars should fit (default=50)
+          count={5000} // Amount of stars (default=5000)
+          factor={5} // Size factor (default=4)
+          saturation={0.3} // Saturation 0-1 (default=0)
+          fade // Faded dots (default=false)
+        />
+        <QuantumCube />
 
         <OrbitControls autoRotate />
       </Canvas>

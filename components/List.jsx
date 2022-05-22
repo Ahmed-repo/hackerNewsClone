@@ -1,5 +1,4 @@
 import React from "react";
-import { ListGroup, ListGroupItem } from "reactstrap";
 
 const List = ({ user, loading }) => {
   return loading ? (

@@ -15,10 +15,24 @@ import {
   Button,
 } from "reactstrap";
 
-const NavBar = ({ setQuery, setChangeColor, changeColor }) => {
+const NavBar = ({
+  setQuery,
+  setChangeColor,
+  changeColor,
+  setSearch,
+  query,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  const clickform = (e) => {
+    e.preventDefault();
+    setSearch(query);
+    setQuery(" ");
+  };
+  const onChangeMethod = (e) => {
+    setQuery(e.target.value);
+  };
 
   return (
     <div>
@@ -26,21 +40,23 @@ const NavBar = ({ setQuery, setChangeColor, changeColor }) => {
         <NavbarBrand className="navbarBrand" href="/">
           HackerNewsClone
         </NavbarBrand>
-        <Form className="d-flex">
+        <Form className="d-flex" onSubmit={clickform}>
           <input
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={onChangeMethod}
             type="text"
             placeholder="Search"
             className="mr-2"
             aria-label="Search"
           />
-          <Button variant="outline-success">Search</Button>
+          <Button type="submit" variant="outline-success">
+            Search
+          </Button>
         </Form>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
+              <NavLink href="https://github.com/Ahmed-repo?tab=repositories">
                 GitHub
               </NavLink>
             </NavItem>
